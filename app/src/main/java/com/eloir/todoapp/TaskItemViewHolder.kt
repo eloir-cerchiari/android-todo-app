@@ -1,2 +1,48 @@
-package com.eloir.todoapp 
+package com.eloir.todoapp
 
+import android.content.Context
+import android.graphics.Paint
+import android.text.format.DateFormat
+import androidx.recyclerview.widget.RecyclerView
+import com.eloir.todoapp.databinding.TaskItemCellBinding
+import java.time.format.DateTimeFormatter
+
+class TaskItemViewHolder(
+    private val context: Context,
+    private val binding: TaskItemCellBinding,
+    private val clickListener: TaskItemClickListener
+): RecyclerView.ViewHolder(binding.root) {
+    private val timeFormat = DateTimeFormatter.ofPattern("HH:mm")
+    private val dateFormat = DateTimeFormatter.ofPattern("dd/MM/YY")
+    fun bindTaskItem(taskItem: TaskItem){
+        binding.name.text = taskItem.name
+
+        if(taskItem.isCompleted()){
+            binding.name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            binding.dueDateTime.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        }
+
+        binding.completeButton.setImageResource(taskItem.imageResource())
+        binding.completeButton.setColorFilter(taskItem.imageColor(context))
+
+        binding.completeButton.setOnClickListener {
+            if(taskItem?.completeDate() == null)
+                clickListener.completeTaskItem(taskItem)
+            else
+                clickListener.uncompletedTaskItem(taskItem)
+        }
+
+        binding.taskCellContainer.setOnClickListener{
+            clickListener.editTaskItem(taskItem)
+        }
+
+
+        if(taskItem.dueTime() != null && taskItem.dueDate() != null){
+            val dateText = dateFormat.format(taskItem.dueDate())
+            binding.dueDateTime.text = timeFormat.format(taskItem.dueTime())
+        }else{
+            binding.dueDateTime.text = ""
+        }
+    }
+
+}

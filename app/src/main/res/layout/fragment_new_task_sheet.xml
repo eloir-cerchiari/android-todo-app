@@ -9,12 +9,13 @@
 
 
     <TextView
+        android:id="@+id/taskTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="30sp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
-        android:text="New Task"
+        android:text="@string/new_task"
         style="@style/TextAppearance.AppCompat.Title"
         />
 
@@ -29,7 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/name"
-            android:hint="Name" />
+            android:hint="@string/name"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@id/desc"
+            android:inputType="text"
+            />
         
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,16 +49,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/desc"
-            android:hint="Description" />
+            android:inputType="text"
+            android:hint="@string/description" />
 
     </com.google.android.material.textfield.TextInputLayout>
-    
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dateTimePickerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/select_date_time"
+
+        />
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="20dp"
-        android:text="Save"
+        android:text="@string/save"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="?colorOnPrimary"/>
+
 
 </LinearLayout>
